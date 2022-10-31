@@ -135,6 +135,15 @@ class Library{
             }
             size = 0;
         }
+        void DeleteAtIndex(size_t index){
+            if(index < size){
+                data[index].~DataCarrier();
+                for(size_t i = index; i < size - 1; i++){
+                    data[i] = std::move(data[i + 1]);
+                }
+                size--;
+            }
+        }
         
         size_t getSize() const{return size;}
         
@@ -154,7 +163,49 @@ class Manager{
                 std::cout << std::endl;
             }
         }
-
+        static void addCarrier(Library& lib){
+            DataCarrier dc;
+            str author, title, type;
+            int year;
+            log("Enter author: ");
+            std::cin >> author;
+            log("Enter title: ");
+            std::cin >> title;
+            log("Enter year: ");
+            std::cin >> year;
+            log("Enter type: ");
+            std::cin >> type;
+            dc.setAuthor(author);
+            dc.setTitle(title);
+            dc.setYear(year);
+            dc.setType(type);
+            dc.setStatus(true);
+            lib.Add(dc);
+        }
+        static void changeCarrierStatus(Library& lib){
+            log("Enter index: ");
+            size_t index;
+            std::cin >> index;
+            if(index < lib.getSize()){
+                lib[index].setStatus(!lib[index].getStatus());
+            }
+        }
+        static void deleteCarrier(Library& lib){
+            log("Enter index: ");
+            size_t index;
+            std::cin >> index;
+            if(index < lib.getSize()){
+                lib.DeleteAtIndex(index);
+            }
+        }
+        static void printMenu(){
+            log("1. Add carrier");
+            log("2. Change carrier status");
+            log("3. Delete carrier");
+            log("4. Print library");
+            log("5. Exit");
+        }
+        
 };
 
 
@@ -183,7 +234,6 @@ int main()
     library.Add(dc2);
     library.Add(dc3);
     Manager::printLibrary(library);
-    // delete[] &library;
     // std::system("clear");
     return 0;
 }
