@@ -205,7 +205,6 @@ class Manager{
             log("4. Print library");
             log("5. Exit");
         }
-        
 };
 
 
@@ -213,10 +212,31 @@ int main()
 {
     Library library;
 
-    // while (true)
-    // {
-
-    // }
+    while (true)
+    {
+        Manager::printMenu();
+        int choice;
+        std::cin >> choice;
+        switch (choice)
+        {
+        case 1:
+            Manager::addCarrier(library);
+            break;
+        case 2:
+            Manager::changeCarrierStatus(library);
+            break;
+        case 3:
+            Manager::deleteCarrier(library);
+            break;
+        case 4:
+            Manager::printLibrary(library);
+            break;
+        case 5:
+            return 0;
+        default:
+            break;
+        }
+    }
     
     DataCarrier dc;
     DataCarrier dc2;
