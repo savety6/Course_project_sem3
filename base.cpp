@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <fstream>
 
 typedef std::string str;
 #define log(x) std::cout << x << std::endl;
@@ -212,6 +213,15 @@ int main()
 {
     Library library;
 
+    
+    
+
+    // std::ifstream file2("file.bin", std::ios::binary);
+    // DataCarrier dc2;
+    // file2.read((char*)&dc2, sizeof(DataCarrier));
+    // file2.close();
+    // dc2.print();
+
     while (true)
     {
         Manager::printMenu();
@@ -232,28 +242,27 @@ int main()
             Manager::printLibrary(library);
             break;
         case 5:
-            return 0;
+            {
+                std::ofstream file("file.bin", std::ios::binary);
+                file.write((char*)&library, sizeof(Library) * library.getSize());
+                file.close();
+                return 0;
+            }
+            break;
+        case 6:
+            {
+                std::ifstream file("file.bin", std::ios::binary);
+                Library lib;
+                file.read((char*)&lib, sizeof(Library) * 1);
+                file.close();
+                Manager::printLibrary(lib);
+
+            }
+            break;
         default:
             break;
         }
     }
-    
-    DataCarrier dc;
-    DataCarrier dc2;
-    DataCarrier dc3;
-    dc.setAuthor("Author");
-    dc.setTitle("Title");
-    dc2.setTitle("bible");
-    dc3.setTitle("Tits");
-    dc.setYear(2019);
-    dc.setType("Book");
-    dc.setStatus(true);
-    // dc.print();
-
-    library.Add(dc);
-    library.Add(dc2);
-    library.Add(dc3);
-    Manager::printLibrary(library);
     // std::system("clear");
     return 0;
 }
