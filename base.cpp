@@ -1,9 +1,10 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <stdio.h>
 
 typedef std::string str;
-#define log(x) std::cout << x << std::endl;
+#define log(x) std::cout << x << '\n';
 
 class Base{
     private:
@@ -170,7 +171,7 @@ class Manager{
             int year;
             log("Enter author: ");
             std::cin >> author;
-            log("Enter title: ");
+            std::cout << "Enter title: "<< '\n';
             std::cin >> title;
             log("Enter year: ");
             std::cin >> year;
@@ -204,7 +205,10 @@ class Manager{
             log("2. Change carrier status");
             log("3. Delete carrier");
             log("4. Print library");
-            log("5. Exit");
+            log("5. Find by author");
+            log("6. Find by title");
+            log("7. Find by status");
+            log("8. Exit");
         }
 };
 
@@ -212,15 +216,20 @@ class Manager{
 int main()
 {
     Library library;
-
-    
-    
-
-    // std::ifstream file2("file.bin", std::ios::binary);
-    // DataCarrier dc2;
-    // file2.read((char*)&dc2, sizeof(DataCarrier));
-    // file2.close();
-    // dc2.print();
+    {
+        std::ifstream file("file.bin", std::ios::binary);
+        if (file.is_open())
+        {
+            size_t size;
+            file.read((char*)&size, sizeof(size_t));
+            for(int i = 0; i < size; i++){
+                DataCarrier dc;
+                file.read((char*)&dc, sizeof(DataCarrier));
+                library.Add(dc);
+            }
+            file.close();
+        }
+    }
 
     while (true)
     {
@@ -243,24 +252,57 @@ int main()
             break;
         case 5:
             {
-                std::ofstream file("file.bin", std::ios::binary);
-                file.write((char*)&library, sizeof(Library) * library.getSize());
-                file.close();
-                return 0;
+                log("Enter author: ");
+                str author;
+                std::cin >> author;
+                for(int i = 0; i < library.getSize(); i++){
+                    if(library[i].getAuthor() == author){
+                        library[i].print();
+                        std::cout << std::endl;
+                    }
+                }
             }
             break;
         case 6:
             {
-                std::ifstream file("file.bin", std::ios::binary);
-                Library lib;
-                file.read((char*)&lib, sizeof(Library) * 1);
+                log("Enter title: ");
+                str title;
+                std::cin >> title;
+                for(int i = 0; i < library.getSize(); i++){
+                    if(library[i].getTitle() == title){
+                        library[i].print();
+                        std::cout << std::endl;
+                    }
+                }
+            }
+            break;
+        case 7:
+        {
+                log("Enter status: ");
+                bool status;
+                std::cin >> status;
+                for(int i = 0; i < library.getSize(); i++){
+                    if(library[i].getStatus() == status){
+                        library[i].print();
+                        std::cout << std::endl;
+                    }
+                }
+            }
+            break;
+        case 8:
+            {
+                size_t size = library.getSize();
+                std::ofstream file("file.bin", std::ios::binary);
+                file.write((char*)&size, sizeof(size_t));
+                    for(int i = 0; i < library.getSize(); i++){
+                        file.write((char*)&library[i], sizeof(DataCarrier));
+                    }
                 file.close();
-                Manager::printLibrary(lib);
-
+                return 0;
             }
             break;
         default:
-            break;
+            return 0;
         }
     }
     // std::system("clear");
