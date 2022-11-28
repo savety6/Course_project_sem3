@@ -64,6 +64,8 @@ class DataCarrier : public Base
             std::cout << "Type: " << type << std::endl;
             std::cout << "Status: " << status << std::endl;
         }
+        
+        
         //getters
         str getType(){
             return type;
@@ -113,15 +115,13 @@ class Library{
             if (size >= capacity)
                 ReAllocate(capacity + capacity / 2); 
             
-            
             data[size] = value;
             size++;
         }
         void Add(const DataCarrier&& value){
             if (size >= capacity)
                 ReAllocate(capacity + capacity / 2); 
-            
-            
+
             data[size] = std::move(value);
             size++;
         }
@@ -154,8 +154,7 @@ class Library{
         } 
         DataCarrier& operator[](size_t index){
             return data[index];
-        } 
-
+        }
 };
 class Manager{
     public:
@@ -169,13 +168,11 @@ class Manager{
             DataCarrier dc;
             str author, title, type;
             int year;
-            log("Enter author: ");
+            std::cout << "Enter the information in the following sequences\n";
+            std::cout << "Author, Title, Year, type: \n";
             std::cin >> author;
-            std::cout << "Enter title: "<< '\n';
             std::cin >> title;
-            log("Enter year: ");
             std::cin >> year;
-            log("Enter type: ");
             std::cin >> type;
             dc.setAuthor(author);
             dc.setTitle(title);
