@@ -151,18 +151,23 @@ class Library{
         
         const DataCarrier& operator[](size_t index) const{
             return data[index];
-        } 
+        }
+        // overload << operator to print library
+        void operator << (Library& lib){
+            for(size_t i = 0; i < lib.getSize(); i++){
+                lib[i].print();
+                std::cout << std::endl;
+            }
+        }
         DataCarrier& operator[](size_t index){
             return data[index];
         }
 };
 class Manager{
     public:
+
         static void printLibrary(Library& lib){
-            for(size_t i = 0; i < lib.getSize(); i++){
-                lib[i].print();
-                std::cout << std::endl;
-            }
+            lib << lib;
         }
         static void addCarrier(Library& lib){
             DataCarrier dc;
@@ -197,6 +202,40 @@ class Manager{
                 lib.DeleteAtIndex(index);
             }
         }
+        static void findByAuthor(Library& lib){
+            log("Enter author: ");
+            str author;
+            std::cin >> author;
+            for(size_t i = 0; i < lib.getSize(); i++){
+                if(lib[i].getAuthor() == author){
+                    lib[i].print();
+                    std::cout << std::endl;
+                }
+            }
+        }
+        static void findByTitle(Library& lib){
+            log("Enter title: ");
+            str title;
+            std::cin >> title;
+            for(size_t i = 0; i < lib.getSize(); i++){
+                if(lib[i].getTitle() == title){
+                    lib[i].print();
+                    std::cout << std::endl;
+                }
+            }
+        }
+        static void findByStatus(Library& lib){
+            log("Enter status: ");
+            bool status;
+            std::cin >> status;
+            for(size_t i = 0; i < lib.getSize(); i++){
+                if(lib[i].getStatus() == status){
+                    lib[i].print();
+                    std::cout << std::endl;
+                }
+            }
+        }
+        
         static void printMenu(){
             log("1. Add carrier");
             log("2. Change carrier status");
@@ -213,20 +252,20 @@ class Manager{
 int main()
 {
     Library library;
+    
+    std::ifstream file("file.bin", std::ios::binary);
+    if (file.is_open())
     {
-        std::ifstream file("file.bin", std::ios::binary);
-        if (file.is_open())
-        {
-            size_t size;
-            file.read((char*)&size, sizeof(size_t));
-            for(int i = 0; i < size; i++){
-                DataCarrier dc;
-                file.read((char*)&dc, sizeof(DataCarrier));
-                library.Add(dc);
-            }
-            file.close();
+        size_t size;
+        file.read((char*)&size, sizeof(size_t));
+        for(int i = 0; i < size; i++){
+            DataCarrier dc;
+            file.read((char*)&dc, sizeof(DataCarrier));
+            library.Add(dc);
         }
+        file.close();
     }
+    
 
     while (true)
     {
@@ -248,43 +287,13 @@ int main()
             Manager::printLibrary(library);
             break;
         case 5:
-            {
-                log("Enter author: ");
-                str author;
-                std::cin >> author;
-                for(int i = 0; i < library.getSize(); i++){
-                    if(library[i].getAuthor() == author){
-                        library[i].print();
-                        std::cout << std::endl;
-                    }
-                }
-            }
+            Manager::findByAuthor(library);
             break;
         case 6:
-            {
-                log("Enter title: ");
-                str title;
-                std::cin >> title;
-                for(int i = 0; i < library.getSize(); i++){
-                    if(library[i].getTitle() == title){
-                        library[i].print();
-                        std::cout << std::endl;
-                    }
-                }
-            }
+            Manager::findByTitle(library);
             break;
         case 7:
-        {
-                log("Enter status: ");
-                bool status;
-                std::cin >> status;
-                for(int i = 0; i < library.getSize(); i++){
-                    if(library[i].getStatus() == status){
-                        library[i].print();
-                        std::cout << std::endl;
-                    }
-                }
-            }
+            Manager::findByStatus(library);
             break;
         case 8:
             {
