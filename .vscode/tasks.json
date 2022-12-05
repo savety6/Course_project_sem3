@@ -11,6 +11,7 @@
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}.out",
                 "-std=c++20",
+                "-I headers",
             ],
             "options": {
                 "cwd": "${fileDirname}"
