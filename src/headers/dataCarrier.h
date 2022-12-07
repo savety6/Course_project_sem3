@@ -1,5 +1,8 @@
 #ifndef DATACARRIER_H
 #define DATACARRIER_H
+#include "base.h"
+#include <string>
+#include <iostream>
 class DataCarrier : public Base
 {
     private:

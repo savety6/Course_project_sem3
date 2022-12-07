@@ -1,0 +1,1 @@
+g++ src/main.cpp src/Implementations/base.cpp src/Implementations/dataCarrier.cpp src/Implementations/library.cpp src/Implementations/manager.cpp -Isrc/headers -o base1.out -std=c++20

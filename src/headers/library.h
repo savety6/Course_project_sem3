@@ -1,5 +1,7 @@
 #ifndef LIBRARY_H
 #define LIBRARY_H
+#include "dataCarrier.h"
+#include <iostream>
 class Library{
     private:
         DataCarrier* data = nullptr;

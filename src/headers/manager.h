@@ -1,5 +1,6 @@
 #ifndef MANAGER_H
 #define MANAGER_H
+#include "library.h"
 class Manager{
     public:
         static void printLibrary(Library& lib);
