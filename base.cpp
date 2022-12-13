@@ -14,7 +14,6 @@ class Base{
     public:
         Base(){
             year = 0;
-            // std::cout << "Base constructor" << std::endl;
         }
         ~Base(){
             // std::cout << "Base destructor" << std::endl;
@@ -64,8 +63,7 @@ class DataCarrier : public Base
             std::cout << "Type: " << type << std::endl;
             std::cout << "Status: " << status << std::endl;
         }
-        
-        
+
         //getters
         str getType(){
             return type;

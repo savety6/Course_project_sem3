@@ -21,8 +21,8 @@ class Library{
         size_t getSize() const;
         
         const DataCarrier& operator[](size_t index) const;
-        // overload << operator to print library
-        void operator << (Library& lib);
         DataCarrier& operator[](size_t index);
+        
+        void operator << (Library& lib);
 };
 #endif

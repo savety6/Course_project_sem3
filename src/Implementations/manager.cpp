@@ -13,12 +13,21 @@ void Manager::addCarrier(Library& lib){
     DataCarrier dc;
     std::string author, title, type;
     int year;
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     std::cout << "Enter the information in the following sequences\n";
-    std::cout << "Author, Title, Year, type: \n";
-    std::cin >> author;
-    std::cin >> title;
+
+    std::cout << "Enter the author: ";
+    std::getline(std::cin, author);
+
+    std::cout << "Enter the title: ";
+    std::getline(std::cin, title);
+
+    std::cout << "Enter the year: ";
     std::cin >> year;
+
+    std::cout << "Enter the type: ";
     std::cin >> type;
+
     dc.setAuthor(author);
     dc.setTitle(title);
     dc.setYear(year);

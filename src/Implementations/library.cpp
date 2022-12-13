@@ -68,7 +68,7 @@ size_t Library::getSize() const{return size;}
 const DataCarrier& Library::operator[](size_t index) const{
     return data[index];
 }
-// overload << operator to print library
+
 void Library::operator << (Library& lib){
     for(size_t i = 0; i < lib.getSize(); i++){
         lib[i].print();
