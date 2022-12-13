@@ -7,11 +7,16 @@
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
-                "${file}",
+                "src/main.cpp",
+                "src/Implementations/base.cpp",
+                "src/Implementations/dataCarrier.cpp",
+                "src/Implementations/library.cpp",
+                "src/Implementations/manager.cpp",
+                "-Isrc/headers",
                 "-o",
-                "${fileDirname}/${fileBasenameNoExtension}.out",
+                "${fileDirname}/build/program.out",
+                // g++ src/main.cpp src/Implementations/base.cpp src/Implementations/dataCarrier.cpp src/Implementations/library.cpp src/Implementations/manager.cpp -Isrc/headers -o base1.out -std=c++20
                 "-std=c++20",
-                "-I headers",
             ],
             "options": {
                 "cwd": "${fileDirname}"

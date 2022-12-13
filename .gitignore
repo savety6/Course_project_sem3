@@ -31,7 +31,6 @@
 *.exe
 *.out
 *.app
-base*
 
 #directories
 base.out.dSYM
